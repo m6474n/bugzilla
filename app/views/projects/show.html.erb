@@ -1,0 +1,70 @@
+
+
+
+<div class="card mt-4">
+  <div class="card-header d-flex justify-content-between  align-items-center">
+<h1><%=@project.title%>   </h1>	 <%= link_to "Edit", edit_project_path(@project) , class:'btn btn-warning'%>
+
+  </div>
+  <div class="card-body">
+<p><%=@project.description%></p>
+  </div>
+</div>
+
+
+
+<% if current_user.manager? %>
+
+
+<div class="card">
+  <div class="card-header">
+<h3>Assigned Users</h3>  </div>
+  <div class="card-body">
+
+<p>
+	<%@project.user.each do |usr|%>
+	<li><%= usr.email%></li>
+	<%end%>
+
+</p>  </div>
+</div>
+
+
+
+	 <%= link_to "Delete Project", project_path(@project), class: 'btn btn-danger mt-2',  data: {
+	turbo_method: :delete,
+	turbo_confirm: "Are you sure?"
+
+}%>
+
+
+
+
+
+
+
+<%end%>
+<% if @bugs.empty?%>
+<%else%>
+<h3>Bug Found!</h3>
+
+<p> <% @bugs.each do |bug|%>
+	<div>
+Status: <%=  bug.status.humanize %><br>
+		Title: <%= link_to bug.title, bug %><br>Description: <%= bug.body %> <br> Created by: <%= bug.qa.email %>  
+
+		
+	</div>	<hr/>
+	<%end%>
+</p>	
+
+<%end%>
+
+
+
+<%# <%= link_to "Create new bug", new_bug_path%>
+<% if current_user.qa?%>
+<%= link_to "Create new bug", new_bug_path(project_id: @project.id) %>
+<%end%>
+
+<p><%= link_to "Go back to home", root_url , class:'btn btn-dark mt-2'%></p>

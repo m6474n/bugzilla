@@ -1,0 +1,18 @@
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid ">
+    <a class="navbar-brand">
+        <% if user_signed_in? %>
+       <p> <strong>User:&nbsp;</strong><%= current_user.email %>&nbsp; <strong>Role:&nbsp;</strong><%= current_user.role %>&nbsp; </p>
+         
+         <%else%>
+         Bugzilla 
+         <%end%> 
+       </a>
+  <div>
+       <% if user_signed_in? %>
+    
+     <p><%=link_to "Edit Profile", edit_user_registration_path , class: 'btn btn-info mx-2'%>&nbsp; <%=link_to "Logout", destroy_user_session_path , class:'btn btn-danger'%></p>
+     <%end%> 
+  </div>
+  </div>
+</nav>

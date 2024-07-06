@@ -1,0 +1,39 @@
+<%= form_with model: @project do |form| %>
+  <div class= "field">
+    <%= form.label :title, class:'form-label' %><br>
+    <%= form.text_field :title,  class:'form-control'%>
+      <% @project.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :description, class:'form-label' %><br>
+    <%= form.text_area :description,  class:'form-control' %>
+      <% @project.errors.full_messages_for(:description).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+    <%# <div> %>
+  
+   <div>
+    <%= form.label :qas, 'Select QAs' %><br>
+    <% User.where(role: ['qa', 'developer']).each do |qa| %>
+      <% checked = @project.user.exists?(qa.id) %>
+      <%= check_box_tag 'project[user_ids][]', qa.id, checked %>
+      <%= label_tag "project_user_ids_#{qa.id}", qa.email %><br>
+    <% end %>
+  </div>
+   
+   <%#  <%= form.label :user_ids, 'Select Users' %><br>
+   <%#   <%= form.collection_select :user_ids, User.where(role: 'qa'), :id, :email, {}, { multiple: true } %>
+
+  <%# </div> %>
+
+  
+
+
+  <div>
+<%= form.submit 'Create New Project', class: 'btn btn-primary' %>  </div>
+<% end %>

@@ -1,0 +1,36 @@
+<h1><%=@bug.title%></h1>
+
+
+<p><%=@bug.body%></p>
+<% if @bug.image.attached? %>
+	  <%= image_tag url_for(@bug.image) , width: 200, height: 200%>
+
+<%end%>
+
+
+<p> <%= link_to "Edit", edit_bug_path(@bug)%></p>
+<% if !current_user.developer? %>
+<p>
+	 <%= link_to "Delete Bug", bug_path(@bug), data: {
+	turbo_method: :delete,
+	turbo_confirm: "Are you sure?"
+
+}%>
+</p>
+<%end%>
+<% if @bug.developer_id.nil? %>
+<%= link_to 'Assign to me', assign_developer_bug_path(@bug), method: :patch, class: 'btn btn-primary', data: { confirm: 'Are you sure you want to assign this bug to yourself?' } %>
+
+<%else%>
+<p>Assigned to: <%= @bug.developer.email%></p>
+
+<%end%>
+
+<%= form_for @bug, url: bug_path(@bug), method: :patch do |f| %>
+  <div class="form-group w-25">
+    <%= f.label :status, "Change Status:" %>
+    <%= f.select :status, Bug.statuses.keys.map { |status| [status.humanize, status] }, {}, class: 'form-control' %>
+  </div>
+  <%= f.submit "Update Status", class: 'btn btn-primary btn-sm' %>
+<% end %>
+<p><%= link_to "Go back to home", root_url%></p>
