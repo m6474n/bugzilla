@@ -12,3 +12,17 @@ import "bootstrap"
 
 import { Turbo } from "@hotwired/turbo-rails"
 Turbo.session.drive = true
+
+$(document).ready(function(){
+var counter = 0;
+$('.project-select-check').on('click', function(){
+    if($(this).prop('checked')){
+        counter +=1;
+        $('#delete-projects').css('display, block')
+    }
+})
+});
+
+
+
+

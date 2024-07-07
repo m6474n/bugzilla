@@ -3,6 +3,7 @@ class Bug < ApplicationRecord
   enum bug_type: {bug: 0, feature: 1}
  enum status: [:new_bug, :started, :completed, ]
 
+
   belongs_to :project   # Assuming bugs belong to a project (you may need to adjust this association)
 
   belongs_to :qa, class_name: 'User', foreign_key: 'qa_id'

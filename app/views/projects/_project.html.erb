@@ -1,12 +1,19 @@
 <% if @projects.any? %>
  <div class="card my-4">
-  <div class="card-header">
+  <div class="card-header d-flex flex-row justify-content-between align-items-center">
    <h2>Search Results</h2>
+   <button class="btn btn-warning" id="select_project" >Select</button>
   </div>
   <div class="card-body">
    <ul>
     <% @projects.each do |project| %>
-      <li><%= link_to project.title, project_path(project) %></li>
+      <li><div class=" d-flex flex-row justify-content-between align-items-center "><%= link_to project.title, project_path(project) %>      
+      <div class='form-check'>
+        <input type="checkbox" class="form-check-input project-select-check" id= "project_<%= project.id%> " data-project-id="<%= project.id%>">
+        <label class='form-check-label' for= "project_<%= project.id%>"></label>
+      </div>
+      
+      </div></li>
     <% end %>
   </ul>
   </div>
@@ -15,3 +22,6 @@
 <% else %>
   <p>No projects found</p>
 <% end %>
+
+<button type="button" class=" btn btn-danger " id="delete-projects" style="display: none"> Delete Projects
+</button>
